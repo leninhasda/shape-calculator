@@ -94,9 +94,9 @@ class App {
 					printf("Invalide input!\n");
 					break;
 			}
-		}
 
-		quitApp();
+			$this->again();
+		}
 	}
 
 	/**
@@ -104,10 +104,21 @@ class App {
 	 */
 	protected function calculateCircle()
 	{
-		$shape = new Circle;
+		$this->shape = new Circle;
+
+		printf("Enter radius:: ");
 		$radius = input();
-		$shape->setRadius($radius);
-		printf("Area of Circle: %f \n", $shape->getArea());
+		$this->shape->setRadius($radius);
+		$result = $this->shape->getArea()
+		printf("Area of Circle: %f \n", $result);
+
+
+		// save operation
+		$typeOp = 'circle';
+		$inputs = [
+			'radius' => $radius,
+		];
+		$this->save($typeOp, $inputs, $result);
 	}
 
 	protected function calculateTriangle()

@@ -42,7 +42,7 @@ function mainScreen()
 	printf("[p] Parallelogram\n");
 	printf("[a] Show Memory\n");
 	printf("[d] Delete Memory\n");
-	printf("[q] Exit\n\n");
+	printf("[q] Exit\n");
 }
 
 /**
@@ -50,9 +50,5 @@ function mainScreen()
  */
 function inputScreen()
 {
-	printf("choice:: ");
+	printf("\nchoice:: ");
 }
-
-/**
- * quits the terminal
- */
