@@ -84,7 +84,7 @@ class App {
 					$this->showRecentMemory();
 					break;
 				case 'd':
-					$this->deleteMomory();
+					$this->delete();
 					break;
 				case 'q':
 					$this->continue = false;
@@ -95,7 +95,6 @@ class App {
 					break;
 			}
 
-			$this->again();
 		}
 	}
 
@@ -108,8 +107,10 @@ class App {
 
 		printf("Enter radius:: ");
 		$radius = input();
+
 		$this->shape->setRadius($radius);
-		$result = $this->shape->getArea()
+		$result = $this->shape->getArea();
+
 		printf("Area of Circle: %f \n", $result);
 
 
@@ -121,12 +122,32 @@ class App {
 		$this->save($typeOp, $inputs, $result);
 	}
 
+	/**
+	 * function for calculating triangle area
+	 */
 	protected function calculateTriangle()
 	{
-		$shape = new Circle;
-		$radius = input();
-		$shape->setRadius($radius);
-		printf("Area of Circle: %f \n", $shape->getArea());
+		$this->shape = new Triangle;
+
+		printf("Enter base:: ");
+		$base = input();
+		printf("Enter height:: ");
+		$height = input();
+
+		$this->shape->setBase( $base );
+		$this->shape->setHeight( $height );
+		$result = $this->shape->getArea();
+
+		printf("Area of Triangle: %f \n", $result);
+
+
+		// save operation
+		$typeOp = 'triangle';
+		$inputs = [
+			'base' => $base,
+			'height' => $height,
+		];
+		$this->save($typeOp, $inputs, $result);
 	}
 
 	protected function calculateRectangle()
@@ -155,22 +176,54 @@ class App {
 
 	protected function showRecentMemory()
 	{
-		$shape = new Circle;
-		$radius = input();
-		$shape->setRadius($radius);
-		printf("Area of Circle: %f \n", $shape->getArea());
+		global $memory;
+
+		$size = count( $memory );
+
+		if( 3 <= $size  ) {
+			$range = range(1,3);
+		} else if( 2 == $size ) {
+			$range = range(1,2);
+		} else if( 1 == $size ) {
+			$range = [1];
+		}
+
+		if( ! $size ) {
+			printf("Nothing in memory!\n");
+			return;
+		}
+
+		foreach( $range as $index ) {
+
+			$memblock = $memory[ $size - $index ];
+
+			printf("Area of %s: %f\n", $memblock['type'], $memblock['result']);
+			foreach ($memblock['inputs'] as $key => $value) {
+				printf("%s = %f\n", $key, $value);
+			}
+
+			printf("\n");
+		}
 	}
 
-	protected function deleteMomory()
+	protected function delete()
 	{
-		$shape = new Circle;
-		$radius = input();
-		$shape->setRadius($radius);
-		printf("Area of Circle: %f \n", $shape->getArea());
+		global $memory;
+
+		if( ! count( $memory ) ) {
+			printf("Nothing to delete!\n");
+		} else {
+			array_pop($memory);
+
+			printf("Last memory deleted.\n");	
+		}
+		
 	}
 
-	protected function saveMemory( $typeOp, $inputs, $result )
+	protected function save( $typeOp, $inputs, $result )
 	{
+		global $memory;
+
 		// make the format
 		$data = [
 			'type' 		=> $typeOp,
