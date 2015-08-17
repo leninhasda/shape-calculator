@@ -52,3 +52,22 @@ function inputScreen()
 {
 	printf("\nchoice:: ");
 }
+
+/**
+ * verifies and returns a number input
+ */
+function inputNumber()
+{
+	$valid = false;
+	
+	while( ! $valid ) {
+		$number = input();
+		if( is_numeric( $number ) && 0 <= $number ) {
+			$valid = true;
+		} else {
+			printf("Input should be a valid number:: ");
+		}
+	}
+
+	return $number;
+}

@@ -106,12 +106,14 @@ class App {
 		$this->shape = new Circle;
 
 		printf("Enter radius:: ");
-		$radius = input();
+		$radius = inputNumber();
 
 		$this->shape->setRadius($radius);
 		$result = $this->shape->getArea();
 
-		printf("Area of Circle: %f \n", $result);
+		$result = round($result, 2);
+
+		printf("Area of Circle: %.2f \n", $result);
 
 
 		// save operation
@@ -130,15 +132,17 @@ class App {
 		$this->shape = new Triangle;
 
 		printf("Enter base:: ");
-		$base = input();
+		$base = inputNumber();
 		printf("Enter height:: ");
-		$height = input();
+		$height = inputNumber();
 
 		$this->shape->setBase( $base );
 		$this->shape->setHeight( $height );
 		$result = $this->shape->getArea();
 
-		printf("Area of Triangle: %f \n", $result);
+		$result = round($result, 2);
+
+		printf("Area of Triangle: %.2f \n", $result);
 
 
 		// save operation
@@ -150,30 +154,95 @@ class App {
 		$this->save($typeOp, $inputs, $result);
 	}
 
+	/**
+	 * function for calculating rectangle area
+	 */
 	protected function calculateRectangle()
 	{
-		$shape = new Circle;
-		$radius = input();
-		$shape->setRadius($radius);
-		printf("Area of Circle: %f \n", $shape->getArea());
+		$this->shape = new Rectangle;
+
+		printf("Enter width:: ");
+		$width = inputNumber();
+		printf("Enter length:: ");
+		$length = inputNumber();
+
+		$this->shape->setWidth( $width );
+		$this->shape->setLength( $length );
+		$result = $this->shape->getArea();
+
+		$result = round($result, 2);
+
+		printf("Area of Rectangle: %.2f \n", $result);
+
+
+		// save operation
+		$typeOp = 'rectangle';
+		$inputs = [
+			'width' => $width,
+			'length' => $length,
+		];
+		$this->save($typeOp, $inputs, $result);
 	}
 
+	/**
+	 * function for calculating square area
+	 */
 	protected function calculateSquare()
 	{
-		$shape = new Circle;
-		$radius = input();
-		$shape->setRadius($radius);
-		printf("Area of Circle: %f \n", $shape->getArea());
+		$this->shape = new Square;
+
+		printf("Enter side:: ");
+		$side = inputNumber();
+
+		$this->shape->setSide( $side );
+		$result = $this->shape->getArea();
+
+		$result = round($result, 2);
+
+		printf("Area of Square: %.2f \n", $result);
+
+
+		// save operation
+		$typeOp = 'square';
+		$inputs = [
+			'side' => $side,
+		];
+		$this->save($typeOp, $inputs, $result);
 	}
 
+	/**
+	 * function for calculating parallelogram area
+	 */
 	protected function calculateParallelogram()
 	{
-		$shape = new Circle;
-		$radius = input();
-		$shape->setRadius($radius);
-		printf("Area of Circle: %f \n", $shape->getArea());
+		$this->shape = new parallelogram;
+
+		printf("Enter base:: ");
+		$base = inputNumber();
+		printf("Enter height:: ");
+		$height = inputNumber();
+
+		$this->shape->setBase( $base );
+		$this->shape->setHeight( $height );
+		$result = $this->shape->getArea();
+
+		$result = round($result, 2);
+
+		printf("Area of Parallelogram: %.2f \n", $result);
+
+
+		// save operation
+		$typeOp = 'parallelogram';
+		$inputs = [
+			'base' => $base,
+			'height' => $height,
+		];
+		$this->save($typeOp, $inputs, $result);
 	}
 
+	/**
+	 * function to show last (at most) 3 operation
+	 */
 	protected function showRecentMemory()
 	{
 		global $memory;
@@ -193,19 +262,27 @@ class App {
 			return;
 		}
 
+
+		printf("=======================\n");
+		printf("   Recent Operations   \n");
+		printf("=======================\n");
+
 		foreach( $range as $index ) {
 
 			$memblock = $memory[ $size - $index ];
 
-			printf("Area of %s: %f\n", $memblock['type'], $memblock['result']);
+			printf("Area of %s: %.2f\n", $memblock['type'], $memblock['result']);
 			foreach ($memblock['inputs'] as $key => $value) {
-				printf("%s = %f\n", $key, $value);
+				printf("%s = %.2f\n", $key, $value);
 			}
 
 			printf("\n");
 		}
 	}
 
+	/**
+	 * function to delete the most recent operation
+	 */
 	protected function delete()
 	{
 		global $memory;
@@ -220,6 +297,13 @@ class App {
 		
 	}
 
+	/**
+	 * function to save operation with their data
+	 *
+	 * @param string $typeOp type of operation
+	 * @param array  $inputs operation data
+	 * @param double $result result
+	 */
 	protected function save( $typeOp, $inputs, $result )
 	{
 		global $memory;
@@ -239,63 +323,3 @@ class App {
 // initialize and run the app
 (new App)->run();
 
-// loop until quit
-/*while( $run ) {
-
-	$choice = input();
-
-	switch ($choice) {
-		case 'c':
-			$shape = new Circle;
-			$radius = input();
-			$shape->setRadius($radius);
-			printf("Area of Circle: %f \n", $shape->getArea());
-			break;
-		case 'c':
-			# code...
-			break;
-		case 'c':
-			# code...
-			break;
-		case 'c':
-			# code...
-			break;
-		case 'c':
-			# code...
-			break;
-		case 'c':
-			# code...
-			break;
-		case 'q':
-			$run = false;
-			break;
-		
-		default:
-			printf("Invalide input!\n");
-			break;
-	}
-
-}*/
-
-//$shape = new Circle;
-// $shape->setRadius(2);
-// var_dump($shape->getArea());
-
-// $shape = new Triangle;
-// $shape->setSide(10);
-// $shape->setBase(20);
-// var_dump($shape->getArea());
-
-// $shape = new Square;
-// $shape->setSide(5);
-// var_dump($shape->getArea());
-
-// $shape = new Rectangle;
-// $shape->setSide(10);
-// $shape->setWidth(20);
-// var_dump($shape->getArea());
-
-// $shape = new Parallelogram;
-// $shape->setSide(10);
-// $shape->setWidth(202);
-// var_dump($shape->getArea());

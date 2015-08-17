@@ -10,6 +10,11 @@ class Rectangle extends Polygone {
 		$this->width = $w;
 	}
 
+	public function setLength( $l ) 
+	{
+		$this->setSide( $l );
+	}
+
 	public function getArea()
 	{
 		return ( $this->side * $this->width );
